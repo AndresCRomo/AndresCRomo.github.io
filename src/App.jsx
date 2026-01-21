@@ -3,7 +3,7 @@ import Envelope from './components/Envelope';
 import { motion } from 'framer-motion';
 import './App.css'
 import { InvitationPages } from './components/InvitationPages';
-
+import { BentoBackground } from './components/BentoBackground';
 function App() {
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -17,6 +17,8 @@ function App() {
   return (
     <div className="min-h-screen bg-linear-to-b from-[#313b53] to-[#9da9c6e6] relative overflow-hidden ">
       {/* CONTENIDO */}
+
+      <BentoBackground/>
       {isOpened && (
         <motion.div
           initial={{ opacity: 0, y: 200, scale: 0.2 }}

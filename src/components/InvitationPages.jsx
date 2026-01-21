@@ -7,7 +7,7 @@
     import { useState } from "react";
 
     const pages = [
-    "/src/assets/page2.jpeg",
+    "/src/assets/InvitacionBoda.jpeg",
     "/src/assets/page.jpeg",
     "/src/assets/page3.jpeg",
     ];
@@ -31,7 +31,7 @@
             <img
                 key={pageIndex}
                 src={pages[pageIndex]}
-                className="absolute inset-0 h-full w-full  rounded-lg shadow-md pointer-events-none"
+                className="absolute inset-0 h-full w-full  rounded-sm shadow-md pointer-events-none"
                 style={{
                 transform: `
                     translateY(${(i + 1) * 8}px)
@@ -75,7 +75,7 @@
         return (
             <motion.img
             src={src}
-            className="absolute inset-0 h-full w-full rounded-lg shadow-xl touch-none z-10"
+            className="absolute inset-0 h-full w-full rounded-sm shadow-xl touch-none z-10"
             style={{ x, rotate, opacity }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
