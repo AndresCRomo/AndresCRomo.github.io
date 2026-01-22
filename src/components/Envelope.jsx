@@ -2,7 +2,7 @@ import { motion, useMotionValue } from "framer-motion";
 import { useState } from "react";
 import Sello from "../assets/Sello.png"
 import { useRef, useLayoutEffect } from "react";
-
+import { InvitationPages } from "./InvitationPages";
 
 
 export default function Envelope({
@@ -19,12 +19,10 @@ export default function Envelope({
         : {
             backgroundColor: color,
         };
-    
     // 🔹 progreso del sello
     const x = useMotionValue(0);
     const [isOpened, setIsOpened] = useState(false);
 
-    
     const containerRef = useRef(null);
     const [cutThreshold, setCutThreshold] = useState(0);
 
@@ -37,11 +35,34 @@ export default function Envelope({
         <div 
         ref={containerRef}
         className="relative w-[90vw] max-w-180 aspect-12/7" style={{ perspective: 1000 }}>
-        {/* Envelope body#000 */}
+        {/* Envelope */}
         <div
             className="absolute bg-[#1F2A44] inset-0 rounded-lg shadow-lg overflow-hidden"
             
         />
+            <div
+            className="absolute bg-[#1F2A44] drop-shadow-4xl z-30  left-1/2 -translate-x-1/2
+            -translate-y-1/2 w-[90vw] max-w-180 aspect-12/7  top-1/2   rounded-lg "
+            style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%)" }}
+        ></div>
+        {isOpened && (
+            <motion.div
+            initial={{ opacity: 0, y: -70, scale:0.5 }}
+            animate={{ opacity: 1, y:  -300 , scale:1,}}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className=" 
+            absolute
+            top-1/2
+            left-1/2
+            -translate-x-1/2
+            -translate-y-1/2
+            z-20
+            pointer-events-auto
+            "
+            >
+            <InvitationPages />
+            </motion.div>
+        )}
 
         {/* Flap  */}
         <motion.div
@@ -89,7 +110,7 @@ export default function Envelope({
                 : { scale: 1, rotate: 0, opacity: 1 }
             }
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute left-1/2 -translate-x-1/2 top-1/3 md:top-2/5 cursor-grab active:cursor-grabbing z-20 touch-none"
+            className="absolute left-1/2 -translate-x-1/2 top-1/3 md:top-2/5 cursor-grab active:cursor-grabbing z-40 touch-none"
             >
                 <div className="size-20 border-2 border-[#93c5fd] flex justify-center items-center rounded-full border-dashed shadow-sm ">
                     <img draggable={false} src={Sello} alt="Sello" />

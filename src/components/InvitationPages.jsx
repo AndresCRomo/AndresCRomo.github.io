@@ -75,7 +75,7 @@
         return (
             <motion.img
             src={src}
-            className="absolute inset-0 h-full w-full rounded-sm shadow-xl touch-none z-10"
+            className="absolute inset-0 h-full w-full rounded-sm shadow-xl  z-10"
             style={{ x, rotate, opacity }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
