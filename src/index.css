@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
+.scroll-section {
+  height: 100vh;
+  scroll-snap-align: start;
+}

@@ -4,7 +4,6 @@ import Sello from "../assets/Sello.png"
 import { useRef, useLayoutEffect } from "react";
 import { InvitationPages } from "./InvitationPages";
 
-
 export default function Envelope({
     color = "#F5F1EB",
     texture,
@@ -39,30 +38,18 @@ export default function Envelope({
         <div
             className="absolute bg-[#1F2A44] inset-0 rounded-lg shadow-lg overflow-hidden"
             
-        />
+            />
+
+            
+
             <div
             className="absolute bg-[#1F2A44] drop-shadow-4xl z-30  left-1/2 -translate-x-1/2
             -translate-y-1/2 w-[90vw] max-w-180 aspect-12/7  top-1/2   rounded-lg "
             style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%)" }}
-        ></div>
-        {isOpened && (
-            <motion.div
-            initial={{ opacity: 0, y: -70, scale:0.5 }}
-            animate={{ opacity: 1, y:  -300 , scale:1,}}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className=" 
-            absolute
-            top-1/2
-            left-1/2
-            -translate-x-1/2
-            -translate-y-1/2
-            z-20
-            pointer-events-auto
-            "
-            >
-            <InvitationPages />
-            </motion.div>
-        )}
+        >
+        
+
+        </div>
 
         {/* Flap  */}
         <motion.div

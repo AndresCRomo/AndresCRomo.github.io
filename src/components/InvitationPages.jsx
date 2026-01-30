@@ -1,96 +1,81 @@
-    import {
-    motion,
-    useMotionValue,
-    useTransform,
-    AnimatePresence,
-    } from "framer-motion";
-    import { useState } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useRef, useState } from "react";
 
-    const pages = [
-    "/src/assets/InvitacionBoda.jpeg",
-    "/src/assets/page.jpeg",
-    "/src/assets/page3.jpeg",
-    ];
+const pages = [
+"/src/assets/InvitacioinBoda_1.jpeg",
+"/src/assets/InvitacioinBoda_2.png",
+"/src/assets/InvitacioinBoda_3.jpeg",
+"/src/assets/InvitacioinBoda_4.jpeg",
+];
 
+function PageSection({ src, index }) {
+const ref = useRef(null);
 
-    export function InvitationPages() {
-    const [index, setIndex] = useState(0);
-    const [direction, setDirection] = useState(1);
+const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+});
 
-    const advance = (dir) => {
-        setDirection(dir);
-        setIndex((i) => (i + 1) % pages.length);
-    };
+// parallax tipo demo
+const y = useTransform(scrollYProgress, [0, 1], [-200, 200]);
+const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.95]);
+const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-    return (
-        <div className="relative md:h-160 md:w-[40vw] w-72 h-96  max-w-md">
-        {/* STACK */}
-        {pages.slice(1).map((_, i) => {
-            const pageIndex = (index + 1 + i) % pages.length;
-            return (
-            <img
-                key={pageIndex}
-                src={pages[pageIndex]}
-                className="absolute inset-0 h-full w-full  rounded-sm shadow-md pointer-events-none"
-                style={{
-                transform: `
-                    translateY(${(i + 1) * 8}px)
-                    rotate(${[-6, 4, -3][i % 3]}deg)
-                    scale(${1 - (i + 1) * 0.035})
-                `,
-                }}
-                draggable={false}
-            />
-            );
-        })}
+return (
+    <section
+    ref={ref}
+    className="scroll-section flex justify-center items-center relative"
+    >
+    <motion.div style={{ y, scale, opacity }} className="relative">
+        <img
+        src={src}
+        draggable={false}
+        className="w-87.5 md:w-[40vw] max-w-md rounded-xl "
+        />
 
-        <AnimatePresence>
-            <Page
-            key={index}
-            src={pages[index]}
-            direction={direction}
-            onSwipe={advance}
-            />
-        </AnimatePresence>
-        </div>
-    );
+    </motion.div>
+    </section>
+);
 }
 
+export function InvitationPages() {
+    const { scrollY } = useScroll();
+    const [hideHint, setHideHint] = useState(false);
 
-    function Page({ src, onSwipe, direction }) {
-        const x = useMotionValue(0);
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        if (latest > 80) setHideHint(true);
+    });
 
-        const rotate = useTransform(x, [-200, 200], [-10, 10]);
-        const opacity = useTransform(x, [-200, 0, 200], [0.4, 1, 0.4]);
-
-        const handleDragEnd = (_, info) => {
-            if (Math.abs(info.offset.x) > 120) {
-            x.set(0);
-            onSwipe(info.offset.x > 0 ? 1 : -1);
-            } else {
-            x.set(0);
-            }
-        };
-
-        return (
-            <motion.img
-            src={src}
-            className="absolute inset-0 h-full w-full rounded-sm shadow-xl  z-10"
-            style={{ x, rotate, opacity }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0}
-            onDragEnd={handleDragEnd}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{
-                opacity: 0,
-                x: direction * -200,
-                rotate: direction * -8,
+return (
+    <div className="relative">
+        {!hideHint && (
+            <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: [10, 0, 10] }}
+            transition={{
+                opacity: { duration: 0.6 },
+                y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
             }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            draggable={false}
-            />
-        );
-    }
-
+            className="
+                sticky
+                top-16
+                md:top-20
+                z-40
+                text-center
+                text-[#1F2A44]
+                text-xl
+                font-semibold
+                md:text-2xl
+                pointer-events-none
+            "
+            style={{ fontFamily: "'Great Vibes', cursive" }}
+            >
+            Descubre la invitación ↓
+            </motion.p>
+        )}
+    {pages.map((src, i) => (
+        <PageSection key={i} src={src} index={i} />
+    ))}
+    </div>
+);
+}
