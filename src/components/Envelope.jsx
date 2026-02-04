@@ -2,8 +2,10 @@ import { motion, useMotionValue } from "framer-motion";
 import { useState } from "react";
 import Sello from "../assets/Sello.png"
 import { useRef, useLayoutEffect } from "react";
-import { InvitationPages } from "./InvitationPages";
-
+import sobreFlap2 from "../assets/porfahjdtpm.png"
+import sobreFront from "../assets/sobre_boda-02.png"
+import sobreFlap from "../assets/sobre_boda-01.png"
+import sobreBack from "../assets/sobre_boda-03.jpeg"
 export default function Envelope({
     color = "#F5F1EB",
     texture,
@@ -36,43 +38,43 @@ export default function Envelope({
         className="relative w-[90vw] max-w-180 aspect-12/7" style={{ perspective: 1000 }}>
         {/* Envelope */}
         <div
-            className="absolute bg-[#1F2A44] inset-0 rounded-lg shadow-lg overflow-hidden"
+            className="absolute inset-0 rounded-lg shadow-lg overflow-hidden" 
+        >
+            <img src={sobreBack} alt="Sobre Back" />
+        </div>
             
-            />
+            
 
             
 
             <div
-            className="absolute bg-[#1F2A44] drop-shadow-4xl z-30  left-1/2 -translate-x-1/2
+            className="absolute  drop-shadow-4xl z-30  left-1/2 -translate-x-1/2
             -translate-y-1/2 w-[90vw] max-w-180 aspect-12/7  top-1/2   rounded-lg "
-            style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%)" }}
-        >
-        
-
-        </div>
+            >
+                <img className="w-full h-full object-fit" src={sobreFront} alt="Sobre Front" />
+            </div>
+            
 
         {/* Flap  */}
         <motion.div
-            className="absolute top-0 bg-[#1F2A44] drop-shadow-4xl z-10 left-0 w-full h-1/2 origin-top rounded-lg"
+            className="absolute top-0  drop-shadow-4xl z-40 left-0 w-full h-full origin-top rounded-lg"
             animate={{ 
                 rotateX: isOpened ? -160 : 0,
                 translateY: isOpened ? 3 : 0,
-                backgroundColor: isOpened ? "#A7B9C8" : "#1F2A44E6",
+                backgroundImage: isOpened ? `url(${sobreFlap2})` : `url(${sobreFlap})`,
             }}
             transition={{ duration: 0.7, ease: "easeInOut" }}
             style={{
-                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
+                
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundSize: "105% 100%",
+                backgroundPosition: "center top",
                 
             }}
         />
 
-        <div className="absolute top-0 bg-[#A7B9C8]  z-0 left-0 w-full h-1/2 origin-top rounded-lg"
-            style={{
-                clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-            }}
-            >
-
-        </div>
+        
 
         {!isOpened &&(
             <motion.div
@@ -97,9 +99,9 @@ export default function Envelope({
                 : { scale: 1, rotate: 0, opacity: 1 }
             }
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute left-1/2 -translate-x-1/2 top-1/3 md:top-2/5 cursor-grab active:cursor-grabbing z-40 touch-none"
+            className="absolute left-1/2 -translate-x-1/2 top-1/3 md:top-[50%] cursor-grab active:cursor-grabbing z-40 touch-none"
             >
-                <div className="size-20 border-2 border-[#93c5fd] flex justify-center items-center rounded-full border-dashed shadow-sm ">
+                <div className="size-20  flex justify-center items-center rounded-full  shadow-sm ">
                     <img draggable={false} src={Sello} alt="Sello" />
                 </div>
             </motion.div>
