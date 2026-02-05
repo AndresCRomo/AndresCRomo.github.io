@@ -162,7 +162,7 @@ function LodgingOptions() {
                     },
                     {
                         name: "Hotel Marriott",
-                        desc: "Cómodo y moderno ",
+                        desc: "Zona norte",
                         url: "https://www.marriott.com/es/search/findHotels.mi?pageType=advanced&searchType=InCity&destinationAddress.latitude=21.927115&destinationAddress.longitude=-102.290611&destinationAddress.destination=Aguascalientes+Marriott+Hotel&nst=paid&cid=PAI_GLB0004N15_GLE000ARON_GLF000M11O&ppc=ppc&pId=rztbppc&gclsrc=aw.ds&gad_source=1&gad_campaignid=10520901317&gbraid=0AAAAADilnidKTvPFtrhcRkYg7V5dLfPdl&gclid=CjwKCAiA1obMBhAbEiwAsUBbIpF_Lg3EqQhjoGa9-6A7HyoMUzgWt7dZXtIlUbkmanIWoVeUvyddDxoCMuoQAvD_BwE&deviceType=desktop-web&view=list&isInternalSearch=true&vsInitialRequest=false&for-hotels-nearme=Near&collapseAccordian=is-hidden&singleSearch=true&singleSearchAutoSuggest=Unmatched&flexibleDateSearchRateDisplay=false&isSearch=true&isRateCalendar=true&recordsPerPage=40&destinationAddress.location=Aguascalientes+Marriott+Hotel&searchRadius=50&isTransient=true&initialRequest=true&fromToDate=02/03/2026&fromToDate_submit=05/02/2026&fromDate=01/05/2026&toDate=02/05/2026&toDateDefaultFormat=05/02/2026&fromDateDefaultFormat=05/01/2026&flexibleDateSearch=true&isHideFlexibleDateCalendar=false&t-start=2026-05-01&t-end=2026-05-02&isFlexibleDatesOptionSelected=true&lengthOfStay=1&roomCount=1&numAdultsPerRoom=1&childrenCount=0&clusterCode=none&numberOfRooms=1#/3/"
                     },
                     {

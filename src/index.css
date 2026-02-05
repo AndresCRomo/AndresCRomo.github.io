@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 html {
-  scroll-snap-type: none;
+  overflow-x: hidden;
 }
 .scroll-section {
   min-height: 100vh;

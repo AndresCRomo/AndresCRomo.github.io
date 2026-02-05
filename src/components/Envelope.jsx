@@ -6,11 +6,23 @@ import sobreFlap2 from "../assets/porfahjdtpm.png"
 import sobreFront from "../assets/sobre_boda-02.png"
 import sobreFlap from "../assets/sobre_boda-01.png"
 import sobreBack from "../assets/sobre_boda-03.jpeg"
+
 export default function Envelope({
     color = "#F5F1EB",
     texture,
     onOpen
 }) {
+    const openEnvelope = () => {
+    if (isOpened) return;
+
+    if (navigator.vibrate) {
+        navigator.vibrate([20, 10, 20]);
+    }
+
+    setIsOpened(true);
+    onOpen?.();
+    };
+
     const backgroundStyle = texture
         ? {
             backgroundImage: `url(${texture})`,
@@ -35,6 +47,7 @@ export default function Envelope({
     return (
         <div 
         ref={containerRef}
+        onClick={openEnvelope}
         className="relative w-[90vw] max-w-180 aspect-12/7" style={{ perspective: 1000 }}>
         {/* Envelope */}
         <div
@@ -77,34 +90,24 @@ export default function Envelope({
         
 
         {!isOpened &&(
-            <motion.div
-            drag="x"
-            dragConstraints={{ left: 0, right: cutThreshold }}
-            dragElastic={0}
-            style={{ x }}
-            onDragEnd={(e, info) => {
-            if (info.offset.x >= cutThreshold) {
-                if (navigator.vibrate) {
-                navigator.vibrate([20, 10, 20]);
-                }
-                setIsOpened(true);
-                onOpen?.()
-            } else {
-                x.set(0); // 👈 vuelve a su lugar
-            }
+        <motion.div
+            onClick={(e) => {
+            e.stopPropagation(); // 👈 evita doble trigger
+            openEnvelope();
             }}
-            animate={
-                isOpened
-                ? { scale: 0, rotate: 20, opacity: 0 }
-                : { scale: 1, rotate: 0, opacity: 1 }
-            }
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute left-1/2 -translate-x-1/2 top-1/3 md:top-[50%] cursor-grab active:cursor-grabbing z-40 touch-none"
-            >
-                <div className="size-20  flex justify-center items-center rounded-full  shadow-sm ">
-                    <img draggable={false} src={Sello} alt="Sello" />
-                </div>
-            </motion.div>
+            whileTap={{ scale: 0.9 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="
+            absolute left-1/2 -translate-x-1/2
+            top-1/3 md:top-1/2
+            z-40 cursor-pointer
+            "
+        >
+            <div className="size-20 flex justify-center items-center rounded-full shadow-sm">
+            <img draggable={false} src={Sello} alt="Sello" />
+            </div>
+        </motion.div>
         )}
 
 

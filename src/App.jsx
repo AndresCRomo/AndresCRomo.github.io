@@ -60,15 +60,15 @@ function App() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-[#1F2A44] text-lg whitespace-nowrap  md:text-2xl font-semibold mb-4 absolute top-56 left-1/2 -translate-x-1/2 z-50 pointer-events-none font-fanttor "
           >
-            Desliza el sello → para abrir
+            Toca el sobre para abrir
           </motion.p>
         )}
 
         {/* SOBRE */}
         <motion.div
           initial={{ y: 0, opacity: 1 }}
-          animate={{ y: isOpened ? 200 : 0, opacity: isOpened ? 0 : 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          animate={{ scale: isOpened ? "180%" : "100%", opacity: isOpened ? 0 : 1,  }}
+          transition={{ duration: 1.5, ease: "easeInOut", }}
           className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
             isOpened ? "pointer-events-none" : ""
           }`}
