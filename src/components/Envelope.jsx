@@ -8,8 +8,6 @@ import sobreFlap from "../assets/sobre_boda-01.png"
 import sobreBack from "../assets/sobre_boda-03.jpeg"
 
 export default function Envelope({
-    color = "#F5F1EB",
-    texture,
     onOpen
 }) {
     const openEnvelope = () => {
@@ -23,27 +21,14 @@ export default function Envelope({
     onOpen?.();
     };
 
-    const backgroundStyle = texture
-        ? {
-            backgroundImage: `url(${texture})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-        }
-        : {
-            backgroundColor: color,
-        };
+    
     // 🔹 progreso del sello
-    const x = useMotionValue(0);
     const [isOpened, setIsOpened] = useState(false);
 
     const containerRef = useRef(null);
-    const [cutThreshold, setCutThreshold] = useState(0);
+    
 
-    useLayoutEffect(() => {
-        if (containerRef.current) {
-            setCutThreshold(containerRef.current.offsetWidth * 0.25);
-        }
-        }, []);
+    
     return (
         <div 
         ref={containerRef}
@@ -68,24 +53,39 @@ export default function Envelope({
             </div>
             
 
-        {/* Flap  */}
+     {/* Flap */}
         <motion.div
-            className="absolute top-0  drop-shadow-4xl z-40 left-0 w-full h-full origin-top rounded-lg"
-            animate={{ 
-                rotateX: isOpened ? -160 : 0,
-                translateY: isOpened ? 3 : 0,
-                backgroundImage: isOpened ? `url(${sobreFlap2})` : `url(${sobreFlap})`,
-            }}
-            transition={{ duration: 0.7, ease: "easeInOut" }}
+        className="absolute top-0 left-0 w-full h-full z-40"
+        style={{
+            transformStyle: "preserve-3d",
+            transformOrigin: "top center",
+        }}
+        animate={{
+            rotateX: isOpened ? -160 : 0,
+        }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+        {/* Cara exterior */}
+        <div
+            className="absolute inset-0 backface-hidden rounded-lg"
             style={{
-                
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundSize: "105% 100%",
-                backgroundPosition: "center top",
-                
+            backgroundImage: `url(${sobreFlap})`,
+            backgroundSize: "105% 100%",
+            backgroundPosition: "center top",
             }}
         />
+
+        {/* Cara interior */}
+        <div
+            className="absolute inset-0 backface-hidden rounded-lg"
+            style={{
+            backgroundImage: `url(${sobreFlap2})`,
+            backgroundSize: "105% 100%",
+            backgroundPosition: "center top",
+            transform: "rotateX(180deg)",
+            }}
+        />
+        </motion.div>
 
         
 

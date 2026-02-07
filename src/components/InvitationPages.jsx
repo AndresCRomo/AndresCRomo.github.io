@@ -1,17 +1,20 @@
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
-import { a, div } from "framer-motion/client";
+
+
 import { useRef, useState } from "react";
 
 const pages = [
-    { type: "image", src: "/src/assets/InvitacioinBoda_1.jpeg" },
-    { type: "image", src: "/src/assets/InvitacioinBoda-02.png" },
+    { type: "image", src: "/src/assets/inv1.png" },
+    { type: "image", src: "/src/assets/inv2.png" },
     { type: "lodging" }, // 👈 tercera página especial
-    { type: "image", src: "/src/assets/InvitacioinBoda_4.jpeg" },
+    { type: "image", src: "/src/assets/inv3.png" },
     { type: "rsvp"}
 ];
 
 
 export function RSVPForm({ setTyping }) {
+    const [loading, setLoading] = useState(false);
+    
     const [form, setForm] = useState({
         name: "",
         attending: true,
@@ -36,36 +39,53 @@ export function RSVPForm({ setTyping }) {
     const [sent, setSent] = useState(false);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        const body = new URLSearchParams(form).toString();
+    if (loading) return; // 👈 evita doble submit
 
-        try {
-            await fetch(
-            "https://script.google.com/macros/s/AKfycbylTSJayTs1ROLylol7fPYwionWd0wpBRxyNhr43FJbg8vdzQhkS3aEoBohMdIHvHI/exec",
-            {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body,
+    setLoading(true);
+
+    const body = new URLSearchParams(form).toString();
+
+    try {
+        await fetch(
+        "https://script.google.com/macros/s/AKfycbylTSJayTs1ROLylol7fPYwionWd0wpBRxyNhr43FJbg8vdzQhkS3aEoBohMdIHvHI/exec",
+        {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
             },
-            );
-
-            setSent(true);
-        } catch (err) {
-            console.error(err);
+            body,
         }
-        };
+        );
+
+        setSent(true);
+    } catch (err) {
+        console.error(err);
+        setLoading(false); // 👈 solo reactivar si falló
+    }
+    };
+
 
     if (sent) {
         return (
-        <p
-            className="text-center text-xl text-[#1F2A44]"
-            style={{ fontFamily: "'Great Vibes', cursive" }}
-        >
-            ¡Gracias por confirmar tu asistencia!
-        </p>
+        <div className="p-2 bg-[#fdfbf7] rounded-xl">
+            <div className="flex flex-col border-2 p-8 border-[#A7B9C8] rounded-xl">
+                <p
+                    className="text-center text-xl font-fanttor font-bold text-[#1F2A44]"
+                    >
+                    ¡Gracias por confirmar tu asistencia!
+                </p>
+                {form.attending && 
+                    (
+                        <div>
+                            <h2 className="text-center text-xl font-fanttor font-bold text-[#1F2A44]">¡Te Esperamos!</h2>
+                            
+                        </div>
+                    )
+                }
+            </div>
+        </div>    
         );
     }
 
@@ -108,25 +128,7 @@ export function RSVPForm({ setTyping }) {
                     </button>
                 </div>
 
-                {form.attending && (
-                    <div className="flex flex-col gap-1">
-                        <label className="text-[#1F2A44] font-ebgaramond  text-xl">
-                            Numero de acompañantes (incluyéndote a ti)
-                        </label>
-                        <input
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            type="number"
-                            min="1"
-                            className="p-3 rounded-lg bg-white/90 shadow-sm"
-                            placeholder="Acompañantes"
-                            value={form.guests}
-                            onChange={(e) =>
-                            setForm({ ...form, guests: e.target.value })
-                            }
-                        />
-                    </div>
-                )}
+                
 
                 <textarea
                     onFocus={handleFocus}
@@ -137,8 +139,14 @@ export function RSVPForm({ setTyping }) {
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                 />
 
-                <button className="bg-[#1F2A44] text-white py-3 rounded-full tracking-wide  hover:bg-[#2a3a63] transition">
-                    Confirmar asistencia
+                <button
+                disabled={loading}
+                className={`
+                    bg-[#1F2A44] text-white py-3 rounded-full tracking-wide transition
+                    ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-[#2a3a63]"}
+                `}
+                >
+                {loading ? "Enviando..." : "Confirmar asistencia"}
                 </button>
             </div>
         </motion.form>
@@ -196,7 +204,7 @@ function PageSection({ page, setTyping }) {
         offset: ["start end", "end start"],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], [-200, 200]);
+    const y = useTransform(scrollYProgress, [0, 1], [-100, 100]);
     const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.95]);
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
@@ -246,13 +254,16 @@ return (
                 }}
                 className="
                     sticky
+                    p-2
+                    backdrop-blur-md 
+                    rounded-lg 
                     top-16
                     md:top-20
                     z-40
                     text-center
                     text-[#1F2A44]
                     text-xl
-                    font-semibold
+                    font-bold
                     md:text-2xl
                     pointer-events-none
                     font-fanttor

@@ -1,7 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import Envelope from "./components/Envelope";
 import { InvitationPages } from "./components/InvitationPages";
-import { motion, useScroll , useMotionValueEvent} from "framer-motion";
+import { motion, useScroll , } from "framer-motion";
+
+
+import img3 from "./assets/bgimg3.jpeg";
+
+import img6 from "./assets/bgimg6.jpeg";
+import img7 from "./assets/bgimg7.jpeg";
+import img8 from "./assets/bgimg8.jpeg";
+import img11 from "./assets/bgimg11.jpeg";
+import img13 from "./assets/bgimg14.jpeg";
+
+
+import papel1 from "./assets/papel-01.png"
+import papel2 from "./assets/papel-02.png"
+import papel3 from "./assets/papel-04.png"
+
 
 function App() {
   const [isOpened, setIsOpened] = useState(false);
@@ -9,6 +24,44 @@ function App() {
   const [showPages, setShowPages] = useState(false);
   const pagesRef = useRef(null);
   const [showHint, setShowHint] = useState(false);
+  const images=[
+      img3,
+      img6,
+      img7,
+      img8,
+      img11,
+      img13,
+      papel1,
+      papel2,
+      papel3,
+      "/src/assets/inv1.png",
+      "/src/assets/inv2.png",
+      "/src/assets/inv3.png",
+      "/src/assets/porfahjdtpm.png",
+      "/src/assets/Sello.png",
+      "/src/assets/sobre_boda-01.png",
+      "/src/assets/sobre_boda-02.png",
+      "/src/assets/sobre_boda-03.jpeg"
+  ]
+  const [loading, setLoading] = useState(true);
+  const preloadImages = (srcs) => {
+    return Promise.all(
+      srcs.map(
+        (src) =>
+          new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = resolve;
+            img.onerror = resolve;
+          })
+      )
+    );
+  };
+  useEffect(() => {
+  preloadImages(images).then(() => {
+    setLoading(false);
+  });
+  }, []);
 
   const handleOpen = () => {
     setIsOpened(true);
@@ -27,38 +80,68 @@ function App() {
   }, [isOpened]);
 
   useEffect(() => {
-    document.body.style.overflowX = "hidden";
-    document.body.style.overflowY = isOpened ? "auto" : "hidden";
-
+    
+    document.body.style.overflowY = isOpened ? "hidden" : "hidden";
     
   }, [isOpened]);
-
+  
+  if (loading) {
   return (
-    <div className="relative min-h-screen transition-all ease-in-out bg-[radial-gradient(circle_at_top,#eaf1ff_0%,#b7cdf2_45%,#8eade9_100%)]">
-      <div className=" z-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center ">
+      <motion.div
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ repeat: Infinity, duration: 1.5 }}
+        className="text-[#1F2A44] text-3xl font-fanttor"
+      >
+        Cargando invitación...
+      </motion.div>
+    </div>
+  );
+}
+  return (
+      <div className="relative min-h-screen transition-all ease-in-out bg-black">
+      <div>
+        <img className="absolute bg-cover contrast-125  grayscale pointer-events-none md:w-full md:-top-70" src={img8} alt="" />
+        <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120" src={img7} alt="" />
+        <img className="absolute bg-cover top-260 grayscale pointer-events-none md:w-full md:top-300" src={img3} alt="" />
+        <img className="absolute bg-cover top-395 grayscale pointer-events-none md:w-full" src={img6} alt="" />
+        <img className="absolute bg-cover top-530 grayscale pointer-events-none md:w-full" src={img11} alt="" />
+        <img className="absolute bg-cover top-700 grayscale pointer-events-none md:w-full" src={img13} alt="" />
+        <img className="absolute bg-cover top-97  md:w-full" src={papel1} alt="" />
+        <img className="absolute bg-cover top-245 md:w-full " src={papel2} alt="" />
+        <img className="absolute bg-cover top-380 md:w-full " src={papel3} alt="" />
+        <img className="absolute bg-cover top-520 md:w-full " src={papel1} alt="" />
+        <img className="absolute bg-cover top-690 md:w-full " src={papel3} alt="" />
+
+      </div>
+
+      <div className=" z-20">
         <div className="absolute inset-0 flex justify-center">
-          <div className="w-[320px] h-[520px] bg-white/40 blur-[80px] rounded-full mt-40" />
+          <div className="w-[320px] h-[520px] bg-white/80 blur-[80px] rounded-full mt-40" />
         </div>
         {/* PÁGINAS */}
         {showPages && (
           <motion.div
-            ref={pagesRef}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
+          ref={pagesRef}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
           >
             <InvitationPages />
           </motion.div>
         )}
 
+        
         {/* HINT */}
         {showHint && (
           <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="text-[#1F2A44] text-lg whitespace-nowrap  md:text-2xl font-semibold mb-4 absolute top-56 left-1/2 -translate-x-1/2 z-50 pointer-events-none font-fanttor "
+            initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: [10, 0, 10] }}
+                transition={{
+                    opacity: { duration: 0.6 },
+                    y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+                }}
+            className="text-[#1F2A44] backdrop-blur-md p-2 rounded-lg text-xl whitespace-nowrap  md:text-2xl font-bold mb-4 absolute top-50 md:top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none font-fanttor "
           >
             Toca el sobre para abrir
           </motion.p>

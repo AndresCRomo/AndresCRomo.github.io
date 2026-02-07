@@ -6,7 +6,9 @@ html {
 .scroll-section {
   min-height: 100vh;
 }
-
+.backface-hidden {
+  backface-visibility: hidden;
+}
 @supports (height: 100svh) {
   .scroll-section {
     min-height: 100svh;
