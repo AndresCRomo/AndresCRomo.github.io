@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import Envelope from "./components/Envelope";
 import { InvitationPages } from "./components/InvitationPages";
 import { motion, useScroll , } from "framer-motion";
-
-
+import {Volume2,VolumeOff} from "lucide-react"
+//import music from "./assets/4seasons.flac"
+import music from "./assets/Always-in-My-Head.flac"
 import img3 from "./assets/bgimg3.jpeg";
 
 import img6 from "./assets/bgimg6.jpeg";
@@ -19,6 +20,28 @@ import papel3 from "./assets/papel-04.png"
 
 
 function App() {
+  const audioRef = useRef(null);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+
+  const playMusic = () => {
+  if (!audioRef.current) return;
+  audioRef.current.volume = 0.5;
+  audioRef.current.play();
+  setMusicPlaying(true);
+};
+
+const toggleMusic = () => {
+  if (!audioRef.current) return;
+
+  if (musicPlaying) {
+    audioRef.current.pause();
+  } else {
+    audioRef.current.play();
+  }
+
+  setMusicPlaying(!musicPlaying);
+};
+
   const [isOpened, setIsOpened] = useState(false);
   const { scrollYProgress } = useScroll();
   const [showPages, setShowPages] = useState(false);
@@ -66,6 +89,7 @@ function App() {
   const handleOpen = () => {
     setIsOpened(true);
     setShowHint(false);
+    playMusic();
     setTimeout(() => {
       setShowPages(true);
     }, 900); // solo espera al sobre
@@ -99,19 +123,29 @@ function App() {
   );
 }
   return (
-      <div className="relative min-h-screen transition-all ease-in-out bg-black">
+    
+      <div className="relative min-h-screen transition-all ease-in-out bg-black overflow-hidden">
+      <audio ref={audioRef} src={music} loop />
+      {showPages && (
+        <button
+          onClick={toggleMusic}
+          className="fixed top-6 right-6 z-50 size-12 rounded-full bg-white/80 backdrop-blur shadow-lg flex items-center justify-center text-xl"
+        >
+          {musicPlaying ? <Volume2/> : <VolumeOff/>}
+        </button>
+      )}
       <div>
-        <img className="absolute bg-cover contrast-125  grayscale pointer-events-none md:w-full md:-top-70" src={img8} alt="" />
-        <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120" src={img7} alt="" />
-        <img className="absolute bg-cover top-260 grayscale pointer-events-none md:w-full md:top-300" src={img3} alt="" />
-        <img className="absolute bg-cover top-395 grayscale pointer-events-none md:w-full" src={img6} alt="" />
-        <img className="absolute bg-cover top-530 grayscale pointer-events-none md:w-full" src={img11} alt="" />
-        <img className="absolute bg-cover top-700 grayscale pointer-events-none md:w-full" src={img13} alt="" />
-        <img className="absolute bg-cover top-97  md:w-full" src={papel1} alt="" />
-        <img className="absolute bg-cover top-245 md:w-full " src={papel2} alt="" />
-        <img className="absolute bg-cover top-380 md:w-full " src={papel3} alt="" />
-        <img className="absolute bg-cover top-520 md:w-full " src={papel1} alt="" />
-        <img className="absolute bg-cover top-690 md:w-full " src={papel3} alt="" />
+        <img className="absolute bg-cover contrast-125  grayscale pointer-events-none md:w-full md:-top-70 lg:hidden" src={img8} alt="" />
+        <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120 lg:hidden" src={img7} alt="" />
+        <img className="absolute bg-cover top-260 grayscale pointer-events-none md:w-full md:top-400 lg:top-500" src={img3} alt="" />
+        <img className="absolute bg-cover top-395 grayscale pointer-events-none md:w-full md:top-620 lg:hidden" src={img6} alt="" />
+        <img className="absolute bg-cover top-530 grayscale pointer-events-none md:w-full md:top-860 lg:block lg:top-0" src={img11} alt="" />
+        <img className="absolute bg-cover top-700 grayscale pointer-events-none md:w-full md:hidden  lg:hidden" src={img13} alt="" />
+        <img className="absolute bg-cover top-97  md:w-full md:top-100 lg:hidden drop-shadow-lg" src={papel1} alt="" />
+        <img className="absolute bg-cover top-245 md:w-full md:top-370 lg:hidden drop-shadow-lg" src={papel2} alt="" />
+        <img className="absolute bg-cover top-380 md:w-full md:top-610 drop-shadow-lg" src={papel3} alt="" />
+        <img className="absolute bg-cover top-520 md:w-full md:top-840 lg:hidden drop-shadow-lg" src={papel1} alt="" />
+        <img className="absolute bg-cover top-690 md:w-full md:hidden lg:hidden drop-shadow-lg" src={papel3} alt="" />
 
       </div>
 
