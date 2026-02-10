@@ -1,13 +1,16 @@
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 
+import img1 from "../assets/inv1.png"
+import img2 from "../assets/inv2.png"
+import img3 from "../assets/inv3.png"
 
 import { useRef, useState } from "react";
 
 const pages = [
-    { type: "image", src: "/src/assets/inv1.png" },
-    { type: "image", src: "/src/assets/inv2.png" },
+    { type: "image", src: img1 },
+    { type: "image", src: img2 },
     { type: "lodging" }, // 👈 tercera página especial
-    { type: "image", src: "/src/assets/inv3.png" },
+    { type: "image", src: img3 },
     { type: "rsvp"}
 ];
 
