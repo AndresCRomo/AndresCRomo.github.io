@@ -255,13 +255,13 @@ return (
                 className="
                     sticky
                     p-2
-                    backdrop-blur-md 
+                    backdrop-blur-xl 
                     rounded-lg 
                     top-16
                     md:top-20
                     z-40
                     text-center
-                    text-[#1F2A44]
+                    text-[#ffffff]
                     text-xl
                     font-bold
                     md:text-2xl

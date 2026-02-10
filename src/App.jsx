@@ -3,10 +3,10 @@ import Envelope from "./components/Envelope";
 import { InvitationPages } from "./components/InvitationPages";
 import { motion, useScroll , } from "framer-motion";
 import {Volume2,VolumeOff} from "lucide-react"
-//import music from "./assets/4seasons.flac"
-import music from "./assets/Always-in-My-Head.flac"
+import music from "./assets/4seasons.flac"
 import img3 from "./assets/bgimg3.jpeg";
-
+import img1 from  "./assets/bgimg3p.jpeg"
+import img2 from "./assets/bgimg2p.jpeg"
 import img6 from "./assets/bgimg6.jpeg";
 import img7 from "./assets/bgimg7.jpeg";
 import img8 from "./assets/bgimg8.jpeg";
@@ -135,8 +135,8 @@ const toggleMusic = () => {
         </button>
       )}
       <div>
-        <img className="absolute bg-cover contrast-125  grayscale pointer-events-none md:w-full md:-top-70 lg:hidden" src={img8} alt="" />
-        <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120 lg:hidden" src={img7} alt="" />
+        <img className="absolute bg-cover  -top-40  grayscale pointer-events-none md:w-full md:-top-70 lg:hidden" src={img1} alt="" />
+        <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120 lg:hidden" src={img2} alt="" />
         <img className="absolute bg-cover top-260 grayscale pointer-events-none md:w-full md:top-400 lg:top-500" src={img3} alt="" />
         <img className="absolute bg-cover top-395 grayscale pointer-events-none md:w-full md:top-620 lg:hidden" src={img6} alt="" />
         <img className="absolute bg-cover top-530 grayscale pointer-events-none md:w-full md:top-860 lg:block lg:top-0" src={img11} alt="" />
@@ -175,7 +175,7 @@ const toggleMusic = () => {
                     opacity: { duration: 0.6 },
                     y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
                 }}
-            className="text-[#1F2A44] backdrop-blur-md p-2 rounded-lg text-xl whitespace-nowrap  md:text-2xl font-bold mb-4 absolute top-50 md:top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none font-fanttor "
+            className="text-[#ffffff] backdrop-blur-xl p-2 rounded-lg text-xl whitespace-nowrap  md:text-2xl font-bold mb-4 absolute top-50 md:top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none font-fanttor "
           >
             Toca el sobre para abrir
           </motion.p>
