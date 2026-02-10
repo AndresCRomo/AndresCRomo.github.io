@@ -5,7 +5,7 @@ import { motion, useScroll , } from "framer-motion";
 import {Volume2,VolumeOff} from "lucide-react"
 import music from "./assets/4seasons.flac"
 import img3 from "./assets/bgimg3.jpeg";
-import img1 from  "./assets/bgimg3p.jpeg"
+import img1 from  "./assets/bgimg1B.jpeg"
 import img2 from "./assets/bgimg2p.jpeg"
 import img6 from "./assets/bgimg6.jpeg";
 import img7 from "./assets/bgimg7.jpeg";
@@ -108,6 +108,22 @@ const toggleMusic = () => {
     document.body.style.overflowY = isOpened ? "hidden" : "hidden";
     
   }, [isOpened]);
+
+  useEffect(() => {
+    const stopMusic = () => {
+      audioRef.current?.pause();
+      setMusicPlaying(false);
+    };
+
+    window.addEventListener("blur", stopMusic);
+    document.addEventListener("visibilitychange", stopMusic);
+
+    return () => {
+      window.removeEventListener("blur", stopMusic);
+      document.removeEventListener("visibilitychange", stopMusic);
+    };
+  }, []);
+
   
   if (loading) {
   return (
@@ -135,7 +151,7 @@ const toggleMusic = () => {
         </button>
       )}
       <div>
-        <img className="absolute bg-cover  -top-40  grayscale pointer-events-none md:w-full md:-top-70 lg:hidden" src={img1} alt="" />
+        <img className="absolute bg-cover   grayscale pointer-events-none md:w-full md:-top-70 lg:hidden" src={img1} alt="" />
         <img className="absolute bg-cover contrast-125 top-100 grayscale pointer-events-none md:w-full md:top-120 lg:hidden" src={img2} alt="" />
         <img className="absolute bg-cover top-260 grayscale pointer-events-none md:w-full md:top-400 lg:top-500" src={img3} alt="" />
         <img className="absolute bg-cover top-395 grayscale pointer-events-none md:w-full md:top-620 lg:hidden" src={img6} alt="" />
@@ -151,7 +167,7 @@ const toggleMusic = () => {
 
       <div className=" z-20">
         <div className="absolute inset-0 flex justify-center">
-          <div className="w-[320px] h-[520px] bg-white/80 blur-[80px] rounded-full mt-40" />
+          
         </div>
         {/* PÁGINAS */}
         {showPages && (
