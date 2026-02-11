@@ -1,11 +1,11 @@
 import { motion, useMotionValue } from "framer-motion";
 import { useState } from "react";
 import Sello from "../assets/Sello.png"
-import { useRef, useLayoutEffect } from "react";
-import sobreFlap2 from "../assets/porfahjdtpm.png"
-import sobreFront from "../assets/sobre_boda-02.png"
-import sobreFlap from "../assets/sobre_boda-01.png"
-import sobreBack from "../assets/sobre_boda-03.jpeg"
+import { useRef } from "react";
+import sobreFlap2 from "../assets/sobre4.webp"
+import sobreFront from "../assets/sobre2.webp"
+import sobreFlap from "../assets/sobre1.webp"
+import sobreBack from "../assets/sobre3.webp"
 
 export default function Envelope({
     onOpen
