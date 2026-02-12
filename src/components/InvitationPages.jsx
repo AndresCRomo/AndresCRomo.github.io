@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-mot
 
 import img1 from "../assets/inv1.png"
 import img2 from "../assets/inv2.png"
-import img3 from "../assets/inv3.png"
+import img3 from "../assets/inv5.webp"
 
 import { useRef, useState } from "react";
 
@@ -10,7 +10,7 @@ const pages = [
     { type: "image", src: img1 },
     { type: "image", src: img2 },
     { type: "lodging" }, // 👈 tercera página especial
-    { type: "image", src: img3 },
+    { type: "imageurl", src: img3, url:"https://mesaderegalos.liverpool.com.mx/milistaderegalos/51952152"},
     { type: "rsvp"}
 ];
 
@@ -230,12 +230,24 @@ function PageSection({ page, setTyping }) {
         >
         <motion.div style={{ y, scale, opacity }} className="relative">
             {page.type === "image" && (
+
             <img
                 src={page.src}
                 draggable={false}
                 className="w-87.5 md:w-[40vw] max-w-md rounded-xl"
             />
             )}
+
+            {page.type ==="imageurl"&& (
+                <a href={page.url}>
+                    <img 
+                    src={page.src} alt="" 
+                    draggable={false}
+                    className="w-87.5 md:w-[40w] max-w-md rounded-xl"
+                    />
+                </a>
+            )}
+
 
             {page.type === "lodging" && <LodgingOptions />}
             {page.type === "rsvp" && <RSVPForm setTyping={setTyping} />}
